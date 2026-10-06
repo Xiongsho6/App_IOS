@@ -1,8 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/api/api_client.dart';
 import '../../core/routes/app_routes.dart';
 import '../../core/theme/app_colors.dart';
 import '../../data/models/cancelacion.dart';
@@ -60,9 +58,7 @@ class _CancelarCitaScreenState extends State<CancelarCitaScreen> {
   }
 
   String _mensajeError(Object e) {
-    if (e is DioException && e.error is ApiException) {
-      return (e.error as ApiException).message;
-    }
+    if (e is CitasException) return e.message;
     return 'Ocurrió un error inesperado. Intenta de nuevo.';
   }
 

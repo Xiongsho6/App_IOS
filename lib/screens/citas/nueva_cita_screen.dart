@@ -1,8 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-import '../../core/api/api_client.dart';
 import '../../core/theme/app_colors.dart';
 import '../../core/routes/app_routes.dart';
 import '../../data/models/cita.dart';
@@ -105,18 +103,11 @@ class _NuevaCitaScreenState extends State<NuevaCitaScreen> {
   }
 
   String _mensajeError(Object e) {
-    if (e is DioException && e.error is ApiException) {
-      return (e.error as ApiException).message;
-    }
+    if (e is CitasException) return e.message;
     return 'Ocurrió un error inesperado. Intenta de nuevo.';
   }
 
-  String? _codigoError(Object e) {
-    if (e is DioException && e.error is ApiException) {
-      return (e.error as ApiException).code;
-    }
-    return null;
-  }
+  String? _codigoError(Object e) => e is CitasException ? e.code : null;
 
   Future<void> _cargarEspecialidades() async {
     setState(() {
